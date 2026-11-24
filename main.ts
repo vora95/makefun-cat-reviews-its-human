@@ -28,6 +28,12 @@ if (/[\r\n]/.test(TEXT)) {
   throw new Error("entry text must be a single line");
 }
 
+// The brief wants the deadpan shape of a real review: refuse a text that
+// does not open with the one-star verdict itself.
+if (!TEXT.startsWith("One star.")) {
+  throw new Error("entry text must open with the one-star verdict");
+}
+
 const OUT_DIR = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 mkdirSync(OUT_DIR, { recursive: true });
 const OUT_PATH = `${OUT_DIR}/entry.txt`;
